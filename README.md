@@ -1,15 +1,4 @@
-# 🚀 Welcome to your new awesome project!
-
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/usernamenumb1/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/usernamenumb1/frontend-project-lvl3/actions)
+### Codeclimate:
+[![Maintainability](https://api.codeclimate.com/v1/badges/e7f7e8c51411bfd7516d/maintainability)](https://codeclimate.com/github/usernamenumb1/frontend-project-lvl3/maintainability)
