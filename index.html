@@ -2,15 +2,16 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
         <title>RSS Agrigator</title>
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <main class="flex-grow-1">
             <section class="container-fluid bg-dark p-5">
                 <div class="row">
                     <div class="col-md-10 col-lg-8 mx-auto text-info">
                         <h1 class="display-3 mb-0">RSS aggregator</h1>
-                        <p>Let`s start read RSS nice and easy</p>
+                        <p class="leed">Let`s start read RSS nice and easy</p>
                         <form action class="rss-form text-body">
                             <div class="row">
                                 <div class="col">
@@ -24,6 +25,8 @@
                                 </div>
                             </div>
                         </form>
+                        <p class="mt-2 mb-0 text-muted">Example: https://ru.hexlet.io/lessons.rss</p>
+                        <p class="feedback m-0 position-absolute small text-danger"></p>
                     </div>
                 </div>
             </section>
