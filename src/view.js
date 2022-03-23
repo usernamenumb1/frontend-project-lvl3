@@ -1,7 +1,10 @@
 import onChange from 'on-change';
+import elements from './elements';
 
 const render = (state) => {
   const errorFeedback = document.querySelector('.feedback');
+  if (state.error) elements.input.classList.add('is-invalid');
+  else elements.input.classList.remove('is-invalid');
   errorFeedback.textContent = state.error;
 };
 
