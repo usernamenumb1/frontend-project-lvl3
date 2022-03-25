@@ -1,15 +1,13 @@
 import onChange from 'on-change';
-import elements from './elements';
+import renders from './renders.js';
 
-const render = (state) => {
-  const errorFeedback = document.querySelector('.feedback');
-  if (state.error) elements.input.classList.add('is-invalid');
-  else elements.input.classList.remove('is-invalid');
-  errorFeedback.textContent = state.error;
-};
-
-export default (state) => onChange(state, (path, value) => {
-  console.log(path);
+export default (state, i18n) => onChange(state, (path, value) => {
   console.log(value);
-  render(state);
+  switch (path) {
+    case 'error':
+      renders.renderFeedBack(state, i18n);
+      break;
+    default:
+      break;
+  }
 });

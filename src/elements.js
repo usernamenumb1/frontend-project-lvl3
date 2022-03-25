@@ -1,5 +1,6 @@
 export default {
   input: document.querySelector('#input-url'),
+  inputLabel: document.querySelector('#input-label'),
   form: document.querySelector('form'),
   h1: document.querySelector('h1'),
   paragraphs: {

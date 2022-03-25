@@ -2,5 +2,4 @@
 import './style.css';
 import init from './init.js';
 
-console.log('Hello World!');
 init();
