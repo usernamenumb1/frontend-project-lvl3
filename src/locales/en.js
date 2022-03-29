@@ -2,10 +2,12 @@ export default {
   translation: {
     headers: {
       h1: 'RSS agregator',
+      postsH2: 'Posts',
+      feedsH2: 'Feeds',
     },
     paragraphs: {
       leed: 'Let`s start read RSS nice and easy!',
-      example: 'Example: https://ru.hexlet.io/lessons.rss',
+      example: 'Example: http://feeds.bbci.co.uk/news/world/rss.xml',
       feedBack: {
         errorMassages: {
           urlError: 'Link must be a valid URL',
@@ -16,7 +18,7 @@ export default {
           noError: null,
         },
         successMassages: {
-          added: 'RSS successfully loaded!',
+          loaded: 'RSS successfully loaded!',
         },
       },
     },
@@ -25,6 +27,9 @@ export default {
       button: {
         add: 'Add',
       },
+    },
+    button: {
+      review: 'Review',
     },
   },
 };

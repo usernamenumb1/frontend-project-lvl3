@@ -3,6 +3,8 @@ export default {
   inputLabel: document.querySelector('#input-label'),
   form: document.querySelector('form'),
   h1: document.querySelector('h1'),
+  feeds: document.querySelector('.feeds'),
+  posts: document.querySelector('.posts'),
   paragraphs: {
     leed: document.querySelector('p.leed'),
     example: document.querySelector('p#example'),
