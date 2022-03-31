@@ -6,13 +6,18 @@ import elements from './elements.js';
 import resources from './locales/index.js';
 import renders from './renders.js';
 import parseRSS from './parse.js';
+// http://lorem-rss.herokuapp.com/feed?unit=second&interval=30
+// http://lorem-rss.herokuapp.com/feed?unit=second&interval=15
 
-// const parsedRSS = (stringRss) => {
-//   const domParser = new DOMParser();
-//   const parsedDom = domParser.parseFromString(stringRss, 'application/xml');
-//   // return parsedDom.querySelector('title');
-//   return parsedDom;
-// };
+const handleError = (err, state) => {
+  switch (err.message) {
+    case 'Network Error':
+      state.error = 'networkError';
+      break;
+    default:
+      state.error = err.message;
+  }
+};
 
 const getProxyUrl = (url) => {
   const proxy = 'https://allorigins.hexlet.app/get?';
@@ -23,6 +28,22 @@ const getProxyUrl = (url) => {
   proxyUrl.search = params;
   return proxyUrl.href;
 };
+
+const getFeedData = (url) => {
+  const proxedURL = getProxyUrl(url);
+  return axios.get(proxedURL)
+    .then((response) => parseRSS(response.data.contents));
+};
+
+const uniquePosts = (collOld, collNew) => collNew
+  .filter((itemNew) => !collOld.some((itemOld) => itemNew.title === itemOld.title));
+
+const refreshFeedData = (url, state) => getFeedData(url)
+  .then((parsedRss) => {
+    const updatedArticles = uniquePosts(state.articles, parsedRss.items);
+    state.articles = [...updatedArticles, ...state.articles];
+  })
+  .then(() => setTimeout(() => refreshFeedData(url, state), 5000));
 
 export default () => {
   const i18n = i18next.createInstance();
@@ -52,28 +73,15 @@ export default () => {
             state.urlList.push(url);
             state.error = 'noError';
           })
-          .then(() => {
-            const proxyUrl = getProxyUrl(url);
-            axios.get(proxyUrl).then((response) => parseRSS(response.data.contents))
-              .then((parsedRss) => {
-                state.feeds = [parsedRss.feed, ...state.feeds];
-                state.articles = [...parsedRss.items, ...state.articles];
-                state.loadingStatus = 'loaded';
-              })
-              .catch((err) => {
-                switch (err.message) {
-                  case 'Network Error':
-                    state.error = 'networkError';
-                    break;
-                  default:
-                    state.error = err.message;
-                }
-              });
+          .then(() => getFeedData(url))
+          .then((parsedRss) => {
+            state.feeds = [parsedRss.feed, ...state.feeds];
+            state.articles = [...parsedRss.items, ...state.articles];
+            state.loadingStatus = 'loaded';
           })
-          .catch((err) => {
-            state.error = err.errors;
-          });
-        console.log(state);
+          .then(() => refreshFeedData(url, state))
+          .catch((err) => handleError(err, state));
+        state.loadingStatus = 'filling';
         elements.form.reset();
         elements.input.focus();
       });

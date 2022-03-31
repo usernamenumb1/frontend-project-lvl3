@@ -43,7 +43,7 @@ const renderPositiveFeedBack = (state, i18n) => {
 
 const renderPosts = (state, i18n) => {
   const postList = state.articles.map((item) => `<li class="list-group-item d-flex justify-content-between align-items-start border-0 border-end-0">
-  <a href="${item.link}" class="fw-dold" data-id="${item.id}">${item.title}</a>
+  <a href="${item.link}" class="fw-dold" data-id="${item.id}" target="_blank" rel="noopener noreferrer">${item.title}</a>
   <button type="button" class="btn btn-outline-primary btn-sm" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal">${i18n.t('button.review')}</button>
   </li>`).join('\n');
   const postCard = createCard(i18n.t('headers.postsH2'), postList);
