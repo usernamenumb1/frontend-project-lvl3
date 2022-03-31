@@ -3,5 +3,5 @@
 ### Codeclimate:
 [![Maintainability](https://api.codeclimate.com/v1/badges/e7f7e8c51411bfd7516d/maintainability)](https://codeclimate.com/github/usernamenumb1/frontend-project-lvl3/maintainability)
 
-### Link to project
-[Try it yourself!](https://frontend-project-lvl3-mu-five.vercel.app/)
+### Link to project:
+### [Try it yourself!](https://frontend-project-lvl3-mu-five.vercel.app/)
