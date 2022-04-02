@@ -23,6 +23,8 @@ const renderAll = (state, i18n) => {
   elements.inputLabel.textContent = i18n.t('submitForm.inputLabel');
   elements.submitButton.textContent = i18n.t('submitForm.button.add');
   elements.paragraphs.example.textContent = i18n.t('paragraphs.example');
+  elements.modal.link.textContent = i18n.t('modal.link');
+  elements.modal.closeButton.textContent = i18n.t('modal.closeButton');
   elements.paragraphs.feedBack.textContent = state.error;
 };
 
@@ -42,8 +44,8 @@ const renderPositiveFeedBack = (state, i18n) => {
 };
 
 const renderPosts = (state, i18n) => {
-  const postList = state.articles.map((item) => `<li class="list-group-item d-flex justify-content-between align-items-start border-0 border-end-0">
-  <a href="${item.link}" class="fw-dold" data-id="${item.id}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+  const postList = state.articles.map((item) => `<li id="post" class="list-group-item d-flex justify-content-between align-items-start border-0 border-end-0">
+  <a href="${item.link}" class="fw-bold" data-id="${item.id}" target="_blank" rel="noopener noreferrer">${item.title}</a>
   <button type="button" class="btn btn-outline-primary btn-sm" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal">${i18n.t('button.review')}</button>
   </li>`).join('\n');
   const postCard = createCard(i18n.t('headers.postsH2'), postList);
@@ -61,10 +63,17 @@ const renderFeeds = (state, i18n) => {
   elements.feeds.append(feedCard);
 };
 
+const renderModal = (state, i18n) => {
+  elements.modal.header.textContent = i18n.t('modal.header', { header: state.currentArticle.title });
+  elements.modal.paragraph.textContent = i18n.t('modal.paragraph', { text: state.currentArticle.description });
+  elements.modal.link.setAttribute('href', state.currentArticle.link);
+};
+
 export default {
   renderAll,
   renderFeedBack,
   renderPositiveFeedBack,
   renderFeeds,
   renderPosts,
+  renderModal,
 };

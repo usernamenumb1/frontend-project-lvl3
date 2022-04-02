@@ -28,6 +28,12 @@ export default {
         add: 'Add',
       },
     },
+    modal: {
+      header: '{{header}}',
+      paragraph: '{{text}}',
+      link: 'Read full',
+      closeButton: 'Close',
+    },
     button: {
       review: 'Review',
     },

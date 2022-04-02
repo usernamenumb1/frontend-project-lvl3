@@ -11,4 +11,11 @@ export default {
     feedBack: document.querySelector('p.feedback'),
   },
   submitButton: document.querySelector('form>div.row>div>button'),
+  modal: {
+    pane: document.querySelector('div.modal'),
+    header: document.querySelector('h5.modal-title'),
+    paragraph: document.querySelector('div>div.modal-body>p'),
+    link: document.querySelector('div.modal-footer>a'),
+    closeButton: document.querySelector('div.modal-footer>button'),
+  },
 };

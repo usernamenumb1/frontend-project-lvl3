@@ -1,49 +1,13 @@
 import * as yup from 'yup';
 import i18next from 'i18next';
-import axios from 'axios';
 import whatchState from './view.js';
 import elements from './elements.js';
 import resources from './locales/index.js';
 import renders from './renders.js';
-import parseRSS from './parse.js';
+import get from './requests.js';
+import utils from './utils.js';
 // http://lorem-rss.herokuapp.com/feed?unit=second&interval=30
 // http://lorem-rss.herokuapp.com/feed?unit=second&interval=15
-
-const handleError = (err, state) => {
-  switch (err.message) {
-    case 'Network Error':
-      state.error = 'networkError';
-      break;
-    default:
-      state.error = err.message;
-  }
-};
-
-const getProxyUrl = (url) => {
-  const proxy = 'https://allorigins.hexlet.app/get?';
-  const proxyUrl = new URL(proxy);
-  const params = new URLSearchParams(proxyUrl);
-  params.append('disableCache', true);
-  params.append('url', url);
-  proxyUrl.search = params;
-  return proxyUrl.href;
-};
-
-const getFeedData = (url) => {
-  const proxedURL = getProxyUrl(url);
-  return axios.get(proxedURL)
-    .then((response) => parseRSS(response.data.contents));
-};
-
-const uniquePosts = (collOld, collNew) => collNew
-  .filter((itemNew) => !collOld.some((itemOld) => itemNew.title === itemOld.title));
-
-const refreshFeedData = (url, state) => getFeedData(url)
-  .then((parsedRss) => {
-    const updatedArticles = uniquePosts(state.articles, parsedRss.items);
-    state.articles = [...updatedArticles, ...state.articles];
-  })
-  .then(() => setTimeout(() => refreshFeedData(url, state), 5000));
 
 export default () => {
   const i18n = i18next.createInstance();
@@ -62,6 +26,7 @@ export default () => {
         loadingStatus: 'filling',
         feeds: [],
         articles: [],
+        currentArticle: null,
       }, i18n);
 
       elements.form.addEventListener('submit', (e) => {
@@ -69,21 +34,30 @@ export default () => {
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
         schema.notOneOf(state.urlList, 'alreadyExists').validate(url)
-          .then(() => {
-            state.urlList.push(url);
-            state.error = 'noError';
-          })
-          .then(() => getFeedData(url))
-          .then((parsedRss) => {
-            state.feeds = [parsedRss.feed, ...state.feeds];
-            state.articles = [...parsedRss.items, ...state.articles];
-            state.loadingStatus = 'loaded';
-          })
-          .then(() => refreshFeedData(url, state))
-          .catch((err) => handleError(err, state));
+          .then(() => get.feedData(url))
+          .then((parsedRss) => utils.updateState(parsedRss, state, url))
+          .then(() => get.refreshFeedData(url, state))
+          .catch((err) => {
+            switch (err.message) {
+              case 'Network Error':
+                state.error = 'networkError';
+                break;
+              default:
+                state.error = err.message;
+            }
+          });
         state.loadingStatus = 'filling';
         elements.form.reset();
         elements.input.focus();
+      });
+      elements.posts.addEventListener('click', (e) => {
+        if (e.target.type) {
+          const targetId = e.target.dataset.id;
+          const link = document.querySelector(`a[data-id='${targetId}']`);
+          link.classList.replace('fw-bold', 'fw-normal');
+          const [modalData] = state.articles.filter((post) => post.id === targetId);
+          state.currentArticle = modalData;
+        }
       });
       renders.renderAll(state, i18n);
     });

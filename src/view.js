@@ -2,7 +2,6 @@ import onChange from 'on-change';
 import renders from './renders.js';
 
 export default (state, i18n) => onChange(state, (path, value) => {
-  console.log(value);
   switch (path) {
     case 'error':
       renders.renderFeedBack(state, i18n);
@@ -15,6 +14,9 @@ export default (state, i18n) => onChange(state, (path, value) => {
       break;
     case 'loadingStatus':
       if (value === 'loaded') renders.renderPositiveFeedBack(state, i18n);
+      break;
+    case 'currentArticle':
+      renders.renderModal(state, i18n);
       break;
     default:
       break;
