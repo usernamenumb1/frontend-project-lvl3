@@ -1,5 +1,5 @@
 import init from './init.js';
 import './style.css';
-import 'bootstrap/js/dist/modal';
+import 'bootstrap/js/dist/modal.js';
 
 init();
