@@ -63,10 +63,14 @@ const renderFeeds = (state, i18n) => {
   elements.feeds.append(feedCard);
 };
 
-const renderModal = (state, i18n) => {
-  elements.modal.header.textContent = i18n.t('modal.header', { header: state.currentArticle.title });
-  elements.modal.paragraph.textContent = i18n.t('modal.paragraph', { text: state.currentArticle.description });
+const renderModal = (state) => {
+  elements.modal.header.textContent = state.currentArticle.title;
+  elements.modal.paragraph.textContent = state.currentArticle.description;
   elements.modal.link.setAttribute('href', state.currentArticle.link);
+};
+
+const renderReadedArticles = (state) => {
+  state.readedArticles.forEach((article) => article.classList.replace('fw-bold', 'fw-normal'));
 };
 
 export default {
@@ -76,4 +80,5 @@ export default {
   renderFeeds,
   renderPosts,
   renderModal,
+  renderReadedArticles,
 };

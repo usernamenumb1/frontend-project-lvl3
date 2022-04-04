@@ -12,7 +12,7 @@ import utils from './utils.js';
 export default () => {
   const i18n = i18next.createInstance();
   i18n.init({
-    lng: 'en',
+    lng: 'ru',
     debug: true,
     resources,
   })
@@ -20,13 +20,14 @@ export default () => {
       const schema = yup.string().url('urlError');
 
       const state = whatchState({
-        currentLanguage: 'en',
+        currentLanguage: 'ru',
         urlList: [],
         error: null,
         loadingStatus: 'filling',
         feeds: [],
         articles: [],
         currentArticle: null,
+        readedArticles: [],
       }, i18n);
 
       elements.form.addEventListener('submit', (e) => {
@@ -54,8 +55,8 @@ export default () => {
         if (e.target.type) {
           const targetId = e.target.dataset.id;
           const link = document.querySelector(`a[data-id='${targetId}']`);
-          link.classList.replace('fw-bold', 'fw-normal');
           const [modalData] = state.articles.filter((post) => post.id === targetId);
+          state.readedArticles.push(link);
           state.currentArticle = modalData;
         }
       });

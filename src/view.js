@@ -16,7 +16,10 @@ export default (state, i18n) => onChange(state, (path, value) => {
       if (value === 'loaded') renders.renderPositiveFeedBack(state, i18n);
       break;
     case 'currentArticle':
-      renders.renderModal(state, i18n);
+      renders.renderModal(state);
+      break;
+    case 'readedArticles':
+      renders.renderReadedArticles(state);
       break;
     default:
       break;
