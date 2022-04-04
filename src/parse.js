@@ -1,7 +1,7 @@
-import { uniqueId } from 'lodash';
+import _ from 'lodash';
 
 const buildItem = (item) => ({
-  id: uniqueId(),
+  id: _.uniqueId(),
   title: item.querySelector('title').textContent,
   link: item.querySelector('link').textContent,
   description: item.querySelector('description').textContent,
