@@ -7,13 +7,13 @@ const proxedUrl = (url) => {
   const proxyUrl = new URL(proxy);
   const params = new URLSearchParams(proxyUrl);
   params.append('disableCache', true);
-  params.append('url', encodeURIComponent(url));
+  params.append('url', url);
   proxyUrl.search = params;
   console.log(proxyUrl.searchParams.get('url'));
   return proxyUrl.href;
 };
 
-const feedData = (url) => axios.get(decodeURIComponent(proxedUrl(url)))
+const feedData = (url) => axios.get(proxedUrl(url))
   .then((response) => parseRSS(response.data.contents));
 
 const refreshFeedData = (url, state) => feedData(url)
