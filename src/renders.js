@@ -41,25 +41,25 @@ const createCard = (colType, listContent) => {
 
 const renderAll = (state, i18n) => {
   document.querySelector('h1').textContent = i18n.t('headers.h1');
-  elements.paragraphs.leed.textContent = i18n.t('paragraphs.leed');
-  elements.inputLabel.textContent = i18n.t('submitForm.inputLabel');
-  elements.submitButton.textContent = i18n.t('submitForm.button.add');
-  elements.paragraphs.example.textContent = i18n.t('paragraphs.example');
-  elements.modal.link.textContent = i18n.t('modal.link');
-  elements.modal.closeButton.textContent = i18n.t('modal.closeButton');
-  elements.paragraphs.feedBack.textContent = state.error;
+  document.querySelector('p.leed').textContent = i18n.t('paragraphs.leed');
+  document.querySelector('#input-label').textContent = i18n.t('submitForm.inputLabel');
+  document.querySelector('form>div.row>div>button').textContent = i18n.t('submitForm.button.add');
+  document.querySelector('p#example').textContent = i18n.t('paragraphs.example');
+  document.querySelector('div.modal-footer>a').textContent = i18n.t('modal.link');
+  document.querySelector('div.modal-footer>button').textContent = i18n.t('modal.closeButton');
+  document.querySelector('p.feedback').textContent = state.error;
 };
 
 const renderFeedBack = (state, i18n) => {
   document.querySelector('p.feedback').classList.replace('text-success', 'text-danger');
   if (state.error !== 'noError') elements.input.classList.add('is-invalid');
   else elements.input.classList.remove('is-invalid');
-  elements.paragraphs.feedBack.textContent = i18n.t(`paragraphs.feedBack.errorMassages.${state.error}`);
+  document.querySelector('p.feedback').textContent = i18n.t(`paragraphs.feedBack.errorMassages.${state.error}`);
 };
 
 const renderPositiveFeedBack = (state, i18n) => {
-  elements.paragraphs.feedBack.classList.replace('text-danger', 'text-success');
-  elements.paragraphs.feedBack.textContent = i18n.t(`paragraphs.feedBack.successMassages.${state.loadingStatus}`);
+  document.querySelector('p.feedback').classList.replace('text-danger', 'text-success');
+  document.querySelector('p.feedback').textContent = i18n.t(`paragraphs.feedBack.successMassages.${state.loadingStatus}`);
   // setTimeout(() => {
   //   elements.paragraphs.feedBack.textContent = null;
   //   elements.paragraphs.feedBack.classList.replace('text-success', 'text-danger');
@@ -72,8 +72,8 @@ const renderPosts = (state, i18n) => {
   <button type="button" class="btn btn-outline-primary btn-sm" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal">${i18n.t('button.review')}</button>
   </li>`).join('\n');
   const postCard = createCard(i18n.t('headers.postsH2'), postList);
-  elements.posts.innerHTML = null;
-  elements.posts.append(postCard);
+  document.querySelector('.posts').innerHTML = null;
+  document.querySelector('.posts').append(postCard);
 };
 
 const renderFeeds = (state, i18n) => {
@@ -82,14 +82,14 @@ const renderFeeds = (state, i18n) => {
   <p class="m-0 small text-black-50">${item.feedDescription}</p>
   </li>`).join('\n');
   const feedCard = createCard(i18n.t('headers.feedsH2'), feedList);
-  elements.feeds.innerHTML = null;
-  elements.feeds.append(feedCard);
+  document.querySelector('.feeds').innerHTML = null;
+  document.querySelector('.feeds').append(feedCard);
 };
 
 const renderModal = (state) => {
-  elements.modal.header.textContent = state.currentArticle.title;
-  elements.modal.paragraph.textContent = state.currentArticle.description;
-  elements.modal.link.setAttribute('href', state.currentArticle.link);
+  document.querySelector('h5.modal-title').textContent = state.currentArticle.title;
+  document.querySelector('div>div.modal-body>p').textContent = state.currentArticle.description;
+  document.querySelector('div.modal-footer>a').setAttribute('href', state.currentArticle.link);
 };
 
 const renderReadedArticles = (state) => {
