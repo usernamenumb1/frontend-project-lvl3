@@ -72,6 +72,7 @@ export default () => {
             }
           });
         state.loadingStatus = 'filling';
+        input.value = null;
         form.reset();
         input.focus();
       });
