@@ -57,11 +57,14 @@ export default () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
-        state.currentURL = url;
-        schema.notOneOf(state.urlList, 'alreadyExists').validate(state.currentURL)
-          .then(() => get.feedData(state.currentURL))
-          .then((parsedRss) => utils.updateState(parsedRss, state, state.currentURL))
-          .then(() => get.refreshFeedData(state.currentURL, state))
+        schema.notOneOf(state.urlList, 'alreadyExists').validate(url)
+          .then(() => get.feedData(url))
+          .then((parsedRss) => utils.updateState(parsedRss, state, url))
+          .then(() => {
+            elements.form.reset();
+            elements.input.focus();
+          })
+          .then(() => get.refreshFeedData(url, state))
           .catch((err) => {
             switch (err.message) {
               case 'Network Error':
@@ -72,8 +75,6 @@ export default () => {
             }
           });
         state.loadingStatus = 'filling';
-        elements.form.reset();
-        elements.input.focus();
       });
       elements.posts.addEventListener('click', (e) => {
         if (e.target.type) {
