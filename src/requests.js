@@ -9,14 +9,12 @@ const proxedUrl = (url) => {
   params.append('disableCache', true);
   params.append('url', url);
   proxyUrl.search = params;
+  console.log(proxyUrl.searchParams.get('url'));
   return proxyUrl.href;
 };
 
-const feedData = (url) => {
-  const proxedURL = proxedUrl(url);
-  return axios.get(proxedURL)
-    .then((response) => parseRSS(response.data.contents));
-};
+const feedData = (url) => axios.get('https://allorigins.hexlet.app/get?', { params: { url, disableCache: true } })
+  .then((response) => parseRSS(response.data.contents));
 
 const refreshFeedData = (url, state) => feedData(url)
   .then((parsedRss) => {
