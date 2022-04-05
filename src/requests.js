@@ -7,13 +7,13 @@ const proxedUrl = (url) => {
   const proxyUrl = new URL(proxy);
   const params = new URLSearchParams(proxyUrl);
   params.append('disableCache', true);
-  params.append('url', url);
+  params.append('url', encodeURIComponent(url));
   proxyUrl.search = params;
   console.log(proxyUrl.searchParams.get('url'));
   return proxyUrl.href;
 };
 
-const feedData = (url) => axios.get('https://allorigins.hexlet.app/get?', { params: { url, disableCache: true } })
+const feedData = (url) => axios.get(decodeURIComponent(proxedUrl(url)))
   .then((response) => parseRSS(response.data.contents));
 
 const refreshFeedData = (url, state) => feedData(url)
