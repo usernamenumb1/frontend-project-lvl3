@@ -72,7 +72,7 @@ export default () => {
             }
           });
         state.loadingStatus = 'filling';
-        input.value = null;
+        console.log(input.value);
         form.reset();
         input.focus();
       });
