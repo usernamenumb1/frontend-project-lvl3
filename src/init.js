@@ -21,6 +21,7 @@ export default () => {
 
       const state = whatchState({
         currentLanguage: 'ru',
+        currentURL: '',
         urlList: [],
         error: null,
         loadingStatus: 'filling',
@@ -56,10 +57,11 @@ export default () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
-        schema.notOneOf(state.urlList, 'alreadyExists').validate(url)
-          .then(() => get.feedData(url))
-          .then((parsedRss) => utils.updateState(parsedRss, state, url))
-          .then(() => get.refreshFeedData(url, state))
+        state.currentURL = url;
+        schema.notOneOf(state.urlList, 'alreadyExists').validate(state.currentURL)
+          .then(() => get.feedData(state.currentURL))
+          .then((parsedRss) => utils.updateState(parsedRss, state, state.currentURL))
+          .then(() => get.refreshFeedData(state.currentURL, state))
           .catch((err) => {
             switch (err.message) {
               case 'Network Error':
