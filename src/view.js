@@ -14,6 +14,7 @@ export default (state, i18n) => onChange(state, (path, value) => {
       break;
     case 'loadingStatus':
       if (value === 'loaded') renders.renderPositiveFeedBack(state, i18n);
+      if (value === 'loading') renders.disableForm();
       break;
     case 'currentArticle':
       renders.renderModal(state);

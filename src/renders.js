@@ -57,7 +57,14 @@ const renderFeedBack = (state, i18n) => {
   document.querySelector('p.feedback').textContent = i18n.t(`paragraphs.feedBack.errorMassages.${state.error}`);
 };
 
+const disableForm = () => {
+  document.querySelector('#input-url').setAttribute('readonly', true);
+  document.querySelector('form>div.row>div>button').setAttribute('disabled', true);
+};
+
 const renderPositiveFeedBack = (state, i18n) => {
+  document.querySelector('#input-url').removeAttribute('readonly');
+  document.querySelector('form>div.row>div>button').removeAttribute('disabled');
   document.querySelector('p.feedback').classList.replace('text-danger', 'text-success');
   document.querySelector('p.feedback').textContent = i18n.t(`paragraphs.feedBack.successMassages.${state.loadingStatus}`);
   // setTimeout(() => {
@@ -104,4 +111,5 @@ export default {
   renderPosts,
   renderModal,
   renderReadedArticles,
+  disableForm,
 };

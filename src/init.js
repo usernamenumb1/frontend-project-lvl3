@@ -59,6 +59,9 @@ export default () => {
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
         schema.notOneOf(state.urlList, 'alreadyExists').validate(url)
+          .then(() => {
+            state.loadingStatus = 'loading';
+          })
           .then(() => get.feedData(url))
           .then((parsedRss) => utils.updateState(parsedRss, state, url))
           .then(() => get.refreshFeedData(url, state))
