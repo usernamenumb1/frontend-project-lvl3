@@ -73,8 +73,9 @@ export default () => {
           });
         state.loadingStatus = 'filling';
         console.log(input.value);
-        form.reset();
-        // input.focus();
+        // form.reset();
+        input.value = '';
+        input.focus();
       });
       const posts = document.querySelector('.posts');
       posts.addEventListener('click', (e) => {
