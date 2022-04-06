@@ -51,6 +51,8 @@ const renderAll = (state, i18n) => {
 };
 
 const renderFeedBack = (state, i18n) => {
+  document.querySelector('#input-url').removeAttribute('readonly');
+  document.querySelector('form>div.row>div>button').removeAttribute('disabled');
   document.querySelector('p.feedback').classList.replace('text-success', 'text-danger');
   if (state.error !== 'noError') document.querySelector('#input-url').classList.add('is-invalid');
   else document.querySelector('#input-url').classList.remove('is-invalid');
